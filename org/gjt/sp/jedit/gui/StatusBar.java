@@ -371,6 +371,9 @@ public class StatusBar extends JPanel
 
 			int bufferLength = buffer.getLength();
 
+			int totalWords = textArea.getWordCount(bufferLength);
+			int wordOffset = textArea.getWordCount(caretPosition);
+
 			buffer.getText(start,dot,seg);
 			int virtualPosition = StandardUtilities.getVirtualWidth(seg,
 				buffer.getTabSize());
@@ -418,6 +421,12 @@ public class StatusBar extends JPanel
 				buf.append(bufferLength);
 				buf.append(')');
 			}
+
+			buf.append('(');
+			buf.append(wordOffset);
+			buf.append('/');
+			buf.append(totalWords);
+			buf.append(')');
 
 			caretStatus.setText(buf.toString());
 			buf.setLength(0);
