@@ -407,28 +407,7 @@ public class EditPane extends JPanel implements BufferSetListener
 				buffer.getLength()));
 
 		// set any selections
-		Selection[] selection = caretInfo.selection;
-		if ( selection == null )
-		{
-			selection = (Selection[]) buffer.getProperty(Buffer.SELECTION);
-		}
-		if(selection != null)
-		{
-			for(int i = 0; i < selection.length; i++)
-			{
-				Selection s = selection[i];
-				// it happens sometimes when a buffer has an invalid selection and is loaded in two caret panes during
-				// startup
-				if (s == null)
-					continue;
-				int max = buffer.getLength();
-				if(s.getStart() > max || s.getEnd() > max)
-					selection[i] = null;
-			}
-		}
-		textArea.setSelection(selection);
-		textArea.setRectangularSelectionEnabled(caretInfo.rectangularSelection);
-		textArea.setMultipleSelectionEnabled(caretInfo.multipleSelection);
+		setSelectionForCaret(caretInfo);
 		// set firstLine value
 		int firstLine = caretInfo.scrollVert;
 		if ( firstLine == -1 )
@@ -464,6 +443,34 @@ public class EditPane extends JPanel implements BufferSetListener
 		 * message altogether. */
 		view.getStatus().setMessage(null);
 	} //}}}
+
+	/**
+	 * @param caretInfo
+	 */
+	public void setSelectionForCaret(CaretInfo caretInfo) {
+		Selection[] selection = caretInfo.selection;
+		if ( selection == null )
+		{
+			selection = (Selection[]) buffer.getProperty(Buffer.SELECTION);
+		}
+		if(selection != null)
+		{
+			for(int i = 0; i < selection.length; i++)
+			{
+				Selection s = selection[i];
+				// it happens sometimes when a buffer has an invalid selection and is loaded in two caret panes during
+				// startup
+				if (s == null)
+					continue;
+				int max = buffer.getLength();
+				if(s.getStart() > max || s.getEnd() > max)
+					selection[i] = null;
+			}
+		}
+		textArea.setSelection(selection);
+		textArea.setRectangularSelectionEnabled(caretInfo.rectangularSelection);
+		textArea.setMultipleSelectionEnabled(caretInfo.multipleSelection);
+	}
 
 	//{{{ bufferRenamed() method
 	/**
