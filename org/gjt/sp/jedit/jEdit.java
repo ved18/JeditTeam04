@@ -89,6 +89,8 @@ import org.gjt.sp.util.SyntaxUtilities;
  */
 public class jEdit
 {
+	private static final int BYTES_TO_KB_DIVIDER = 1024;
+
 	//{{{ getVersion() method
 	/**
 	 * Returns the jEdit version as a human-readable string.
@@ -2915,8 +2917,8 @@ public class jEdit
 		long total = rt.totalMemory();
 		long used = total - free;
 
-		int totalKb = (int) (total / 1024);
-		int usedKb = (int) (used / 1024);
+		int totalKb = (int) (total / BYTES_TO_KB_DIVIDER);
+		int usedKb = (int) (used / BYTES_TO_KB_DIVIDER);
 		JProgressBar progress = new JProgressBar(0,totalKb);
 		progress.setValue(usedKb);
 		progress.setStringPainted(true);
@@ -2925,7 +2927,7 @@ public class jEdit
 
 		Object[] message = new Object[4];
 		message[0] = getProperty("memory-status.gc",
-			new Object[] { (usedBefore - used) / 1024 });
+			new Object[] { (usedBefore - used) / BYTES_TO_KB_DIVIDER });
 		message[1] = Box.createVerticalStrut(12);
 		message[2] = progress;
 		message[3] = Box.createVerticalStrut(6);
