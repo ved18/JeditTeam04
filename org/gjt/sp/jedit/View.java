@@ -2270,16 +2270,15 @@ loop:		while (true)
 			extState = jEdit.getIntegerProperty(prefix + ".extendedState", Frame.NORMAL);
 		}
 
-		public ViewConfig(boolean plainView, String splitConfig,
-			int x, int y, int width, int height, int extState)
+		public ViewConfig(ViewConfigParameters viewConfigParams)
 		{
-			this.plainView = plainView;
-			this.splitConfig = splitConfig;
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-			this.extState = extState;
+			this.plainView = viewConfigParams.plainView;
+			this.splitConfig = viewConfigParams.splitConfig;
+			this.x = viewConfigParams.x;
+			this.y = viewConfigParams.y;
+			this.width = viewConfigParams.width;
+			this.height = viewConfigParams.height;
+			this.extState = viewConfigParams.extState;
 		}
 	} //}}}
 
